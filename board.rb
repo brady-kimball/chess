@@ -34,12 +34,16 @@ class Board
     @grid[row][col] = val
   end
 
+  def in_bounds?(pos)
+    pos.all? { |x| x.between?(0, 7) }
+  end
+
   protected
 
   def make_starting_grid
     white_pieces = Array.new(2) { Array.new(8) { Piece.new } }
     black_pieces = Array.new(2) { Array.new(8) { Piece.new } }
-    empties = Array.new(8) { Array.new(8, NullPiece.instance) }
+    empties = Array.new(4) { Array.new(8, NullPiece.instance) }
 
     white_pieces + empties + black_pieces
   end
