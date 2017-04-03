@@ -2,21 +2,25 @@ require 'singleton'
 require_relative 'move_modules'
 
 class Piece
-  def initialize(board, pos)
+  attr_accessor :pos
+
+  def initialize(board, pos, color)
     @board = board
     @pos = pos
+    @color = color
   end
 
   def empty?
     false
   end
 
-  def symbol
-    :p
-  end
-
   def to_s
-    symbol
+    str = symbol.to_s
+    if @color == :b
+      str.underline
+    else
+      str
+    end
   end
 end
 
@@ -107,14 +111,23 @@ class King < Piece
   end
 end
 
+class Pawn < Piece
+  def symbol
+    :P
+  end
+end
+
 class NullPiece < Piece
   include Singleton
+
+  def initialize
+  end
 
   def empty?
     true
   end
 
-  def symbol
-    :_
+  def to_s
+    "_"
   end
 end

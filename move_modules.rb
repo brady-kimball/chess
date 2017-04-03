@@ -1,7 +1,7 @@
 module SlidingPiece
   DIFFS = {
-    horizontal: [[0,-1],[0,1]]
-    vertical: [[-1,0],[1,0]]
+    horizontal: [[0,-1],[0,1]],
+    vertical: [[-1,0],[1,0]],
     diagonal: [[1,1],[-1,-1],[1,-1],[-1,1]]
   }
 
@@ -32,7 +32,7 @@ module SlidingPiece
     curr_row, curr_col = @pos
     next_pos = [curr_row + d_row, curr_col + d_col]
 
-    while @board[next_pos].empty?
+    while @board.in_bounds?(next_pos) && @board[next_pos].empty?
       valid_moves << next_pos
       curr_row, curr_col = next_pos
       next_pos = [curr_row + d_row, curr_col + d_col]
