@@ -32,7 +32,7 @@ module SlidingPiece
     curr_row, curr_col = @pos
     next_pos = [curr_row + d_row, curr_col + d_col]
 
-    while @board.in_bounds?(next_pos) && @board[next_pos].empty?
+    while @board.in_bounds?(next_pos) && @board[next_pos].color != color
       valid_moves << next_pos
       curr_row, curr_col = next_pos
       next_pos = [curr_row + d_row, curr_col + d_col]
@@ -51,9 +51,10 @@ module SteppingPiece
     move_diffs.each do |diff|
       d_row, d_col = diff
       next_pos = [curr_row + d_row, curr_col + d_col]
-      valid_moves << next_pos if @board[next_pos].empty?
+      if @board.in_bounds?(next_pos) && @board[next_pos].color != color
+        valid_moves << next_pos
+      end
     end
-
 
     valid_moves
   end
