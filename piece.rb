@@ -1,9 +1,10 @@
 require 'singleton'
-require_relative 'moves'
+require_relative 'move_modules'
 
 class Piece
-
-  def initialize
+  def initialize(board, pos)
+    @board = board
+    @pos = pos
   end
 
   def empty?
@@ -13,6 +14,16 @@ class Piece
   def to_s
     "p"
   end
+end
+
+class Rook < Piece
+  include SlidingPiece
+
+  # def move_dirs
+
+
+end
+
 end
 
 class NullPiece < Piece
