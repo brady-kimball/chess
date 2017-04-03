@@ -28,7 +28,6 @@ module SlidingPiece
   end
 
   def grow_unblocked_moves_in(d_row,d_col)
-    # have @board
     valid_moves = []
     curr_row, curr_col = @pos
     next_pos = [curr_row + d_row, curr_col + d_col]
@@ -46,5 +45,17 @@ end
 
 module SteppingPiece
 
+  def moves
+    valid_moves = []
+    curr_row, curr_col = @pos
+    move_diffs.each do |diff|
+      d_row, d_col = diff
+      next_pos = [curr_row + d_row, curr_col + d_col]
+      valid_moves << next_pos if @board[next_pos].empty?
+    end
+
+
+    valid_moves
+  end
 
 end
