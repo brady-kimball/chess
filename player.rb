@@ -15,7 +15,6 @@ class HumanPlayer < Player
     @display.render
 
     until @display.selected_array.length == 2
-      p @display.selected_array
       @display.cursor.get_input
       @display.update
     end

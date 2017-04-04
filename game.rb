@@ -13,7 +13,7 @@ class Game
   end
 
   def play
-    until over?
+    until winner
       begin
         start_pos, end_pos = @player1.make_move
         @board.move_piece(start_pos, end_pos)
@@ -22,12 +22,18 @@ class Game
         sleep(1)
         retry
       end
-
     end
+    puts "Winner is #{winner}!"
   end
 
-  def over?
-    @board.checkmate?(:w) || @board.checkmate?(:b)
+  def winner
+    if @board.checkmate?(:w)
+      "Black"
+    elsif @board.checkmate?(:b)
+      "White"
+    else
+      false
+    end
   end
 end
 

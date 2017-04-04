@@ -17,7 +17,7 @@ class Display
     puts "  " + tr
 
     0.upto(7).each do |row|
-      print "#{row.to_s.colorize(:blue)} "
+      print "#{(8 - row).to_s.colorize(:blue)} "
       #  print "#{idx_str} #{row.map(&:to_s).join(' ')}"
 
       0.upto(7).each do |col|
@@ -27,10 +27,10 @@ class Display
         print_str = print_str.colorize(:red) if pos == @selected_array[0]
         print "#{print_str} "
       end
-      print "\n"
+      print "#{(8 - row).to_s.colorize(:blue)}\n"
     end
 
-    puts
+    puts "  " + tr
   end
 
   def update
@@ -39,6 +39,8 @@ class Display
       @cursor.toggle_selected
     end
     render
+    puts @selected_array.map { |arr| @board.pos_to_str(arr) }.join(" to ")
+    sleep(0.3) if @selected_array.length == 2
   end
 
   def clear_selected_array
@@ -48,6 +50,7 @@ class Display
   def selected?
     @cursor.selected
   end
+
 end
 
 # until @selected_array.length == 2

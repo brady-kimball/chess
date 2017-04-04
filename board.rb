@@ -11,9 +11,9 @@ class Board
     piece = self[start_pos]
 
     if piece == NullPiece.instance
-      raise "No piece at start_pos: #{start_pos}"
+      raise "No piece at start_pos: #{pos_to_str(start_pos)}"
     elsif !piece.valid_moves.include?(end_pos)
-      raise "Can't move to end_pos: #{end_pos}"
+      raise "Can't move to end_pos: #{pos_to_str(end_pos)}"
     end
 
     self[end_pos] = piece
@@ -28,24 +28,16 @@ class Board
   end
 
   def [](pos)
-    #TODO: put in game class
     if pos.is_a?(String)
-      letter = pos[0]
-      num = pos[1].to_i
-      letter_index = ("a".."h").to_a.index(letter)
-      @grid[num][letter_index]
-    else
-      row, col = pos
-      @grid[row][col]
+      pos = pos_to_str(pos)
     end
+    row, col = pos
+    @grid[row][col]
   end
 
   def []=(pos, val)
     if pos.is_a?(String)
-      letter = pos[0]
-      num = pos[1].to_i
-      letter_index = ("a".."h").to_a.index(letter)
-      @grid[num][letter_index] = val
+      pos = pos_to_str(pos)
     else
       row, col = pos
       @grid[row][col] = val
@@ -96,6 +88,20 @@ class Board
     end
 
     dupped
+  end
+
+  def str_to_pos(string)
+    letter = string[0]
+    num = 8 - string[1].to_i
+    letter_index = ("a".."h").to_a.index(letter)
+    [num, letter_index]
+  end
+
+  def pos_to_str(pos)
+    row, col = pos
+    letter = ("a".."h").to_a[col]
+    num = 8 - row
+    letter + num.to_s
   end
 
   protected
