@@ -15,22 +15,23 @@ class Game
 
   def play
     until winner
-      begin
-        display.render("#{current_player.color_str}'s turn:")
-        start_pos, end_pos = current_player.make_move
-        move_str = "#{@board.pos_to_str(start_pos)} to #{@board.pos_to_str(end_pos)}"
-        puts move_str
-        sleep(0.5)
-        @board.move_piece(start_pos, end_pos)
-      rescue RuntimeError => e
-        puts e.message
-        sleep(1)
-        retry
-      end
-
+      display.render("#{current_player.color_str}'s turn:")
+      process_player_move
       switch_players!
     end
+
     puts "Winner is #{winner}!"
+  end
+
+  def process_player_move
+    start_pos, end_pos = current_player.make_move
+    puts "#{@board.pos_to_str(start_pos)} to #{@board.pos_to_str(end_pos)}"
+    sleep(0.5)
+    @board.move_piece(start_pos, end_pos)
+
+  rescue RuntimeError => e
+    puts e.message
+    retry
   end
 
   def switch_players!
@@ -40,8 +41,6 @@ class Game
   def current_player
     @players[0]
   end
-
-
 
   def winner
     if @board.checkmate?(:w)
