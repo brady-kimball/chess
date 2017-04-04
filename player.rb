@@ -1,14 +1,24 @@
+require 'byebug'
+
 class Player
-  def initialize(name, display)
+  attr_reader :color, :name
+
+  def initialize(name, display, color)
     @display = display
     @cursor = display.cursor
     @name = name
-
+    @color = color
   end
 
-  def play_turn
-    @display.render
+  def update_display
+    header = "#{color_str}'s turn:"
+    @display.render(header)
   end
+
+  def color_str
+    color == :w ? "White" : "Black"
+  end
+
 end
 
 class HumanPlayer < Player
@@ -16,23 +26,35 @@ class HumanPlayer < Player
     positions = []
 
     until positions.length == 2
-      @display.render(positions)
-      puts positions.map { |arr| @display.board.pos_to_str(arr) }.join(" to ")
-
       @cursor.get_input
+      pos = @cursor.cursor_pos
+
       if selected?
-        positions << @cursor.cursor_pos
+        if positions.empty? && @display.board[pos].color != color
+          @cursor.toggle_selected
+          raise "Pick your own color!"
+        end
+
+        if pos == positions[0]
+          positions = []
+        else
+          positions << pos
+        end
         @cursor.toggle_selected
       end
+      update_display(positions)
     end
 
-    sleep(0.3)
     positions
+  end
+
+  def update_display(positions)
+    super()
+    puts @display.board.pos_to_str(positions[0]) if positions.length == 1
   end
 
   def selected?
     @display.cursor.selected
   end
-
 
 end

@@ -11,8 +11,9 @@ class Display
     # @selected_array = []
   end
 
-  def render(selected_array = [])
+  def render(header = "Chess is cool", selected_array = [])
     system("clear")
+    puts header
     tr = ('a'..'h').to_a.map { |l| l.colorize(:blue) }.join(" ")
     puts "  " + tr
 
