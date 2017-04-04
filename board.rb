@@ -7,14 +7,10 @@ class Board
     make_starting_grid
   end
 
-  def null_piece
-    NullPiece.instance
-  end
-
   def move_piece(start_pos, end_pos)
     piece = self[start_pos]
 
-    if piece == null_piece
+    if piece == NullPiece.instance
       raise "No piece at start_pos: #{start_pos}"
     elsif !piece.moves.include?(end_pos)
       raise "Can't move to end_pos: #{end_pos}"
@@ -22,7 +18,7 @@ class Board
 
     self[end_pos] = piece
     self[end_pos].pos = end_pos
-    self[start_pos] = null_piece
+    self[start_pos] = NullPiece.instance
   end
 
   def [](pos)

@@ -32,18 +32,7 @@ class Display
     puts
   end
 
-  def test_cursor
-    while true
-      render
-      @cursor.get_input
-    end
+  def move(new_pos)
+    @board.move_piece(@cursor.cursor_pos, new_pos)
   end
-
-
-
-
-end
-
-if __FILE__ == $PROGRAM_NAME
-  Display.new(Board.new).test_cursor
 end

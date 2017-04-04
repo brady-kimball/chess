@@ -17,11 +17,7 @@ class Piece
 
   def to_s
     str = symbol.to_s
-    if @color == :b
-      str.underline
-    else
-      str
-    end
+    @color == :b ? str.underline : str
   end
 end
 
@@ -166,8 +162,7 @@ end
 class NullPiece < Piece
   include Singleton
 
-  def initialize
-  end
+  def initialize; end
 
   def empty?
     true
