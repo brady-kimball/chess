@@ -8,10 +8,10 @@ class Display
   def initialize(board)
     @board = board
     @cursor = Cursor.new([0, 0], board)
-    @selected_array = []
+    # @selected_array = []
   end
 
-  def render
+  def render(selected_array = [])
     system("clear")
     tr = ('a'..'h').to_a.map { |l| l.colorize(:blue) }.join(" ")
     puts "  " + tr
@@ -24,7 +24,7 @@ class Display
         pos = [row, col]
         print_str = board[pos].to_s
         print_str = print_str.colorize(:green) if pos == @cursor.cursor_pos
-        print_str = print_str.colorize(:red) if pos == @selected_array[0]
+        print_str = print_str.colorize(:red) if pos == selected_array[0]
         print "#{print_str} "
       end
       print "#{(8 - row).to_s.colorize(:blue)}\n"
@@ -33,22 +33,8 @@ class Display
     puts "  " + tr
   end
 
-  def update
-    if selected?
-      @selected_array << @cursor.cursor_pos
-      @cursor.toggle_selected
-    end
-    render
-    puts @selected_array.map { |arr| @board.pos_to_str(arr) }.join(" to ")
-    sleep(0.3) if @selected_array.length == 2
-  end
-
   def clear_selected_array
     @selected_array = []
-  end
-
-  def selected?
-    @cursor.selected
   end
 
 end
