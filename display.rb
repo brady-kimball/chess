@@ -3,11 +3,12 @@ require_relative 'cursor'
 require_relative 'board'
 
 class Display
-  attr_reader :board
+  attr_reader :board, :cursor, :selected_array
 
   def initialize(board)
     @board = board
     @cursor = Cursor.new([0, 0], board)
+    @selected_array = []
   end
 
   def render
@@ -20,10 +21,10 @@ class Display
       #  print "#{idx_str} #{row.map(&:to_s).join(' ')}"
 
       0.upto(7).each do |col|
-        color = @cursor.selected ? :red : :green
         pos = [row, col]
         print_str = board[pos].to_s
-        print_str = print_str.colorize(color) if pos == @cursor.cursor_pos
+        print_str = print_str.colorize(:green) if pos == @cursor.cursor_pos
+        print_str = print_str.colorize(:red) if pos == @selected_array[0]
         print "#{print_str} "
       end
       print "\n"
@@ -32,10 +33,39 @@ class Display
     puts
   end
 
-  def move(new_pos)
-    @board.move_piece(@cursor.cursor_pos, new_pos)
+  def update
+    if selected?
+      @selected_array << @cursor.cursor_pos
+      @cursor.toggle_selected
+    end
+    render
+  end
+
+  def clear_selected_array
+    @selected_array = []
+  end
+
+  def selected?
+    @cursor.selected
   end
 end
+
+# until @selected_array.length == 2
+#   key = KEYMAP[read_char]
+#   handle_key(key)
+#   if @selected
+#     if @selected_array[0] == cursor_pos
+#       @selected_array.pop
+#     else
+#       @selected_array << @cursor_pos
+#     end
+#     toggle_selected
+#   end
+# end
+
+
+
+
 
 if __FILE__ == $PROGRAM_NAME
   a = Display.new(Board.new);

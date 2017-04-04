@@ -33,17 +33,22 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :board, :selected
+  attr_reader :cursor_pos, :board, :selected, :selected_array
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
     @selected = false
+    @selected_array = []
   end
 
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)
+  end
+
+  def toggle_selected
+    @selected = !@selected
   end
 
   private
@@ -93,9 +98,5 @@ class Cursor
     row, col = @cursor_pos
     d_row, d_col = diff
     @cursor_pos = [(row + d_row) % 8, (col + d_col) % 8]
-  end
-
-  def toggle_selected
-    @selected = !@selected
   end
 end
