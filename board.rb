@@ -12,7 +12,7 @@ class Board
 
     if piece == NullPiece.instance
       raise "No piece at start_pos: #{start_pos}"
-    elsif !piece.moves.include?(end_pos)
+    elsif !piece.valid_moves.include?(end_pos)
       raise "Can't move to end_pos: #{end_pos}"
     end
 
@@ -21,14 +21,35 @@ class Board
     self[start_pos] = NullPiece.instance
   end
 
+  def move_piece!(start_pos, end_pos)
+    self[end_pos] = self[start_pos]
+    self[end_pos].pos = end_pos
+    self[start_pos] = NullPiece.instance
+  end
+
   def [](pos)
-    row, col = pos
-    @grid[row][col]
+    #TODO: put in game class
+    if pos.is_a?(String)
+      letter = pos[0]
+      num = pos[1].to_i
+      letter_index = ("a".."h").to_a.index(letter)
+      @grid[num][letter_index]
+    else
+      row, col = pos
+      @grid[row][col]
+    end
   end
 
   def []=(pos, val)
-    row, col = pos
-    @grid[row][col] = val
+    if pos.is_a?(String)
+      letter = pos[0]
+      num = pos[1].to_i
+      letter_index = ("a".."h").to_a.index(letter)
+      @grid[num][letter_index] = val
+    else
+      row, col = pos
+      @grid[row][col] = val
+    end
   end
 
   def in_bounds?(pos)
@@ -54,7 +75,7 @@ class Board
     king_pos = find_king(color)
     get_pieces(opp_color).any? do |piece|
       piece.moves.include?(king_pos)
-      p piece.pos if piece.moves.include?(king_pos)
+      piece.pos if piece.moves.include?(king_pos)
     end
   end
 

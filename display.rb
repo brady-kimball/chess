@@ -40,7 +40,22 @@ end
 if __FILE__ == $PROGRAM_NAME
   a = Display.new(Board.new);
   b = a.board;
-  b[[1, 3]] = NullPiece.instance
-  b.move_piece([0,3],[6,3])
+  #b[[1, 3]] = NullPiece.instance
+  #b.move_piece([0,3],[6,3])
   a.render
+
+moves = [[[1,5],[2,5]],
+  [[6,4],[4,4]],
+  [[1,6],[3,6]],
+  [[7,3],[3,7]]]
+
+
+  moves.each do |start, end_pos|
+    b.move_piece(start, end_pos)
+    a.render
+    gets
+  end
+  p b.checkmate?(:w)
+  p b.checkmate?(:b)
+
 end
