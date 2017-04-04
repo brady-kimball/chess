@@ -28,12 +28,14 @@ module SlidingPiece
   end
 
   def grow_unblocked_moves_in(d_row,d_col)
+    opp_color = color == :w ? :b : :w
     valid_moves = []
     curr_row, curr_col = @pos
     next_pos = [curr_row + d_row, curr_col + d_col]
 
     while @board.in_bounds?(next_pos) && @board[next_pos].color != color
       valid_moves << next_pos
+      break if @board[next_pos].color == opp_color
       curr_row, curr_col = next_pos
       next_pos = [curr_row + d_row, curr_col + d_col]
     end

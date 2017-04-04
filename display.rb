@@ -36,3 +36,11 @@ class Display
     @board.move_piece(@cursor.cursor_pos, new_pos)
   end
 end
+
+if __FILE__ == $PROGRAM_NAME
+  a = Display.new(Board.new);
+  b = a.board;
+  b[[1, 3]] = NullPiece.instance
+  b.move_piece([0,3],[6,3])
+  a.render
+end

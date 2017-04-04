@@ -19,6 +19,14 @@ class Piece
     str = symbol.to_s
     @color == :b ? str.underline : str
   end
+
+  def valid_moves
+    moves.reject do |move|
+      dupped_board = @board.dup
+      dupped_board.move_piece(pos, move)
+      dupped_board.in_check?(color)
+    end
+  end
 end
 
 class Rook < Piece
