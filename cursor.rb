@@ -39,7 +39,6 @@ class Cursor
     @cursor_pos = cursor_pos
     @board = board
     @selected = false
-    @selected_array = []
   end
 
   def get_input

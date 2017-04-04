@@ -3,79 +3,46 @@ require_relative 'cursor'
 require_relative 'board'
 
 class Display
-  attr_reader :board, :cursor, :selected_array
+  attr_reader :board, :cursor
 
   def initialize(board)
     @board = board
     @cursor = Cursor.new([0, 0], board)
-    # @selected_array = []
   end
 
-  def render(header = "Chess is cool", selected_array = [])
+  def render(title = "", selected_array = [])
     system("clear")
-    puts header
-    tr = ('a'..'h').to_a.map { |l| l.colorize(:blue) }.join(" ")
-    puts "  " + tr
+    puts title
+    puts header_footer
 
     0.upto(7).each do |row|
-      print "#{(8 - row).to_s.colorize(:blue)} "
-      #  print "#{idx_str} #{row.map(&:to_s).join(' ')}"
+      print row_index(row)
 
       0.upto(7).each do |col|
         pos = [row, col]
-        print_str = board[pos].to_s
-        print_str = print_str.colorize(:green) if pos == @cursor.cursor_pos
-        print_str = print_str.colorize(:red) if pos == selected_array[0]
-        print "#{print_str} "
+        print_piece(pos, selected_array)
       end
-      print "#{(8 - row).to_s.colorize(:blue)}\n"
+
+      print row_index(row) + "\n"
     end
 
-    puts "  " + tr
+    puts header_footer
   end
 
-  def clear_selected_array
-    @selected_array = []
+  private
+
+  def print_piece(pos, selected_array)
+    print_str = board[pos].to_s
+    print_str = print_str.colorize(:green) if pos == @cursor.cursor_pos
+    print_str = print_str.colorize(:red) if pos == selected_array[0]
+    print "#{print_str} "
   end
 
-end
-
-# until @selected_array.length == 2
-#   key = KEYMAP[read_char]
-#   handle_key(key)
-#   if @selected
-#     if @selected_array[0] == cursor_pos
-#       @selected_array.pop
-#     else
-#       @selected_array << @cursor_pos
-#     end
-#     toggle_selected
-#   end
-# end
-
-
-
-
-
-if __FILE__ == $PROGRAM_NAME
-  a = Display.new(Board.new);
-  b = a.board;
-  #b[[1, 3]] = NullPiece.instance
-  #b.move_piece([0,3],[6,3])
-  a.render
-
-moves = [[[1,5],[2,5]],
-  [[6,4],[4,4]],
-  [[1,6],[3,6]],
-  [[7,3],[3,7]]]
-
-
-  moves.each do |start, end_pos|
-    b.move_piece(start, end_pos)
-    a.render
-    gets
+  def header_footer
+    "  " + ('a'..'h').to_a.map { |l| l.colorize(:blue) }.join(" ")
   end
-  p b.checkmate?(:w)
-  p b.checkmate?(:b)
 
+  def row_index(row)
+    "#{(8 - row).to_s.colorize(:blue)} "
+  end
 end
