@@ -14,7 +14,7 @@ class Player
   end
 
   def color_str
-    color == :w ? "White" : "Black"
+    color == :w ? "Cyan" : "Black"
   end
 
 end

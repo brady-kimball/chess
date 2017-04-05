@@ -17,13 +17,12 @@ class Game
     start_game
 
     until winner
-      @display.cursor.reset 
+      @display.cursor.reset
       @display.render("#{current_player.color_str}'s turn:")
       process_player_move
       switch_players!
     end
-
-    puts "Winner is #{winner}!"
+    @display.render("#{winner} wins!!!!!!".blink)
   end
 
   def current_player
@@ -36,7 +35,7 @@ class Game
     system('clear')
     puts "Welcome to chess."
     puts
-    puts "#{@players[0].name} is #{@players[0].color_str}"
+    puts "#{@players[0].name} is #{@players[0].color_str.colorize(:cyan).underline}"
     puts "#{@players[1].name} is #{@players[1].color_str.underline}"
     puts
     puts "Press :enter to continue."
@@ -61,7 +60,7 @@ class Game
     if @board.checkmate?(:w)
       "Black"
     elsif @board.checkmate?(:b)
-      "White"
+      "Cyan"
     else
       false
     end

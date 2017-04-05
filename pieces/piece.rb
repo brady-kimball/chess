@@ -13,8 +13,8 @@ class Piece
   end
 
   def to_s
-    str = symbol.to_s
-    @color == :b ? str.underline : str
+    str = symbol.to_s.underline
+    @color == :b ? str : str.colorize(:cyan)
   end
 
   def valid_moves
