@@ -17,6 +17,7 @@ class Game
     start_game
 
     until winner
+      @display.cursor.reset 
       @display.render("#{current_player.color_str}'s turn:")
       process_player_move
       switch_players!
