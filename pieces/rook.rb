@@ -2,7 +2,8 @@ class Rook < Piece
   include SlidingPiece
 
   def symbol
-    :R
+    9814
+    #  :R
   end
 
   protected

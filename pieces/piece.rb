@@ -13,8 +13,8 @@ class Piece
   end
 
   def to_s
-    str = symbol.to_s
-    @color == :b ? str.underline : str
+    s = @color == :b ? symbol + 6 : symbol
+    [s].pack('U*')
   end
 
   def valid_moves

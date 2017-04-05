@@ -2,7 +2,8 @@ class King < Piece
   include SteppingPiece
 
   def symbol
-    :K
+    9812
+    # :K
   end
 
   protected

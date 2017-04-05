@@ -1,6 +1,7 @@
 class Pawn < Piece
   def symbol
-    :P
+    9817
+    # :P
   end
 
   def moves

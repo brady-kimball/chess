@@ -8,9 +8,9 @@ class Player
     @color = color
   end
 
-  def update_display
+  def update_display(positions = [])
     header = "#{color_str}'s turn:"
-    @display.render(header)
+    @display.render(header, positions)
   end
 
   def color_str

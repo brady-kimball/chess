@@ -2,7 +2,8 @@ class Queen < Piece
   include SlidingPiece
 
   def symbol
-    :Q
+    9813
+    # :Q
   end
 
   protected

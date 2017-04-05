@@ -44,7 +44,8 @@ class Game
 
   def process_player_move
     start_pos, end_pos = current_player.make_move
-    puts "#{@board.pos_to_str(start_pos)} to #{@board.pos_to_str(end_pos)}"
+    piece_moved = @board[start_pos].class.to_s
+    puts "#{piece_moved}: #{@board.pos_to_str(start_pos)} to #{@board.pos_to_str(end_pos)}"
     sleep(0.5)
     @board.move_piece(start_pos, end_pos)
   rescue RuntimeError => e

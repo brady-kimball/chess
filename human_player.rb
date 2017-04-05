@@ -28,7 +28,7 @@ class HumanPlayer < Player
   end
 
   def update_display(positions)
-    super()
+    super(positions)
     puts @display.board.pos_to_str(positions[0]) if positions.length == 1
   end
 

@@ -2,7 +2,8 @@ class Knight < Piece
   include SteppingPiece
 
   def symbol
-    :N
+    9816
+    #:N
   end
 
   protected

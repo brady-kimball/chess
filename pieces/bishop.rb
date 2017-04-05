@@ -2,7 +2,8 @@ class Bishop < Piece
   include SlidingPiece
 
   def symbol
-    :B
+    9815
+    #:B
   end
 
   protected

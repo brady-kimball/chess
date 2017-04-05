@@ -1,6 +1,8 @@
 require 'colorize'
 require_relative 'cursor'
 require_relative 'board'
+require 'byebug'
+
 
 class Display
   attr_reader :board, :cursor
@@ -16,7 +18,7 @@ class Display
     puts header_footer
 
     0.upto(7).each do |row|
-      print row_index(row)
+      print row_index(row) + ""
 
       0.upto(7).each do |col|
         pos = [row, col]
@@ -32,17 +34,21 @@ class Display
   private
 
   def print_piece(pos, selected_array)
-    print_str = board[pos].to_s
-    print_str = print_str.colorize(:green) if pos == @cursor.cursor_pos
-    print_str = print_str.colorize(:red) if pos == selected_array[0]
-    print "#{print_str} "
+    print_str = board[pos].to_s.colorize(:background => grey_or_white(pos))
+    print_str = print_str.colorize(:background => :green) if pos == @cursor.cursor_pos
+    print_str = print_str.colorize(:background => :red) if pos == selected_array[0]
+    print "#{print_str}"
   end
 
   def header_footer
-    "  " + ('a'..'h').to_a.map { |l| l.colorize(:blue) }.join(" ")
+    " " + ('a'..'h').to_a.map { |l| l.colorize(:blue) }.join("")
+  end
+
+  def grey_or_white(pos)
+    pos.reduce(:+).odd? ? :white : :grey
   end
 
   def row_index(row)
-    "#{(8 - row).to_s.colorize(:blue)} "
+    "#{(8 - row).to_s.colorize(:blue)}"
   end
 end
