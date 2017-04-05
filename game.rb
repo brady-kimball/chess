@@ -23,7 +23,7 @@ class Game
       switch_players!
     end
 
-    puts "Winner is #{winner}!"
+    @display.render("#{winner} wins!!!!!".blink)
   end
 
   def current_player
