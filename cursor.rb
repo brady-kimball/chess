@@ -41,6 +41,10 @@ class Cursor
     @selected = false
   end
 
+  def reset
+    @cursor_pos = [0, 0]
+  end
+
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)

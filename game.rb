@@ -17,6 +17,7 @@ class Game
     start_game
 
     until winner
+      @display.cursor.reset
       @display.render("#{current_player.color_str}'s turn:")
       process_player_move
       switch_players!
@@ -35,7 +36,7 @@ class Game
     system('clear')
     puts "Welcome to chess."
     puts
-    puts "#{@players[0].name} is #{@players[0].color_str}"
+    puts "#{@players[0].name} is #{@players[0].color_str.underline}"
     puts "#{@players[1].name} is #{@players[1].color_str.underline}"
     puts
     puts "Press :enter to continue."
