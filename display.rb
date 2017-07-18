@@ -32,10 +32,16 @@ class Display
   private
 
   def print_piece(pos, selected_array)
-    print_str = board[pos].to_s
-    print_str = print_str.colorize(:green) if pos == @cursor.cursor_pos
-    print_str = print_str.colorize(:red) if pos == selected_array[0]
-    print "#{print_str} "
+    position_string = board[pos].to_s
+
+    case pos
+    when @cursor.cursor_pos
+      position_string = position_string.colorize(:green)
+    when selected_array[0]
+      position_string = position_string.colorize(:red)
+    end
+
+    print "#{position_string} "
   end
 
   def header_footer
