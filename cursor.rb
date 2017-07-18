@@ -41,8 +41,8 @@ class Cursor
     @selected = false
   end
 
-  def reset
-    @cursor_pos = [0, 0]
+  def reset(color = :w)
+    @cursor_pos = color == :w ? [7, 0] : [0, 0]
   end
 
   def get_input
